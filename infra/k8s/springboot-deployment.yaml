@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: springboot-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: springboot-service
+  template:
+    metadata:
+      labels:
+        app: springboot-service
+    spec:
+      containers:
+        - name: springboot-service
+          image: ghcr.io/satya66123/springboot-service-mongo:latest
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATA_MONGODB_URI
+              value: mongodb://root:root@mongodb:27017/appdb?authSource=admin
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            periodSeconds: 15
