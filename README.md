@@ -54,6 +54,27 @@ Production-style **multi-stack DevOps repository** with:
 
 ---
 
+
+## 📌 infra/mongodb/init.js
+
+db = db.getSiblingDB("appdb");
+
+db.createCollection("employees");
+
+db.employees.insertMany([
+  { name: "Satya", email: "satya@example.com", role: "Developer", createdAt: new Date() },
+  { name: "Srinath", email: "srinath@example.com", role: "Engineer", createdAt: new Date() }
+]);
+
+---
+
+## ✅ After this, restart Mongo container to apply init script:
+
+docker compose down -v
+docker compose up -d --build
+
+---
+
 ## Run (Docker Compose)
 
 1) Copy env:
@@ -61,6 +82,8 @@ Production-style **multi-stack DevOps repository** with:
 cp .env.example .env
 
 ---
+
+## Docker Build
 
 docker compose up -d --build
 
@@ -70,15 +93,15 @@ docker compose up -d --build
 
 Spring Boot
 
-Health: GET /api/employees/health
+✅ Health: GET /api/employees/health
 
-List: GET /api/employees
+✅ List: GET /api/employees
 
-Create: POST /api/employees
+✅ Create: POST /api/employees
 
-Update: PUT /api/employees/{id}
+✅ Update: PUT /api/employees/{id}
 
-Delete: DELETE /api/employees/{id}
+✅ Delete: DELETE /api/employees/{id}
 
 Example create:
 
@@ -103,13 +126,13 @@ Manifests available in:
 infra/k8s/
 Includes:
 
-MongoDB StatefulSet + PVC
+✅ MongoDB StatefulSet + PVC
 
-Spring Boot Deployment + Service
+✅ Spring Boot Deployment + Service
 
-PHP Deployment + Service
+✅ PHP Deployment + Service
 
-Ingress routing
+✅Ingress routing
 
 ---
 
@@ -121,14 +144,14 @@ docker pull ghcr.io/satya66123/php-service-mongo:latest
 
 
 ## Project Status
-Module	Status
-MongoDB setup + seed	✅ Completed
-Spring Boot Mongo CRUD API	✅ Completed
-PHP UI (API integration)	✅ Completed
-Docker compose orchestration	✅ Completed
-Kubernetes manifests	✅ Completed
-GitHub Actions CI	✅ Completed
-GHCR publish workflow + packages	✅ Completed
+       Module	                                  Status
+MongoDB setup + seed	                       ✅ Completed
+Spring Boot Mongo CRUD API	                   ✅ Completed
+PHP UI (API integration)	                   ✅ Completed
+Docker compose orchestration	               ✅ Completed
+Kubernetes manifests	                       ✅ Completed
+GitHub Actions CI	                           ✅ Completed
+GHCR publish workflow + packages	           ✅ Completed
 
 ---
 
