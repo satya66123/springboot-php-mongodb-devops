@@ -144,14 +144,15 @@ docker pull ghcr.io/satya66123/php-service-mongo:latest
 
 
 ## Project Status
-       Module	                                  Status
-MongoDB setup + seed	                       ✅ Completed
-Spring Boot Mongo CRUD API	                   ✅ Completed
-PHP UI (API integration)	                   ✅ Completed
-Docker compose orchestration	               ✅ Completed
-Kubernetes manifests	                       ✅ Completed
-GitHub Actions CI	                           ✅ Completed
-GHCR publish workflow + packages	           ✅ Completed
+|      Module	               |                    Status         |
+|-----------------------------------|------------------------------|
+| MongoDB setup + seed|✅ Completed |
+| Spring Boot Mongo CRUD API | ✅ Completed |
+| PHP UI (API integration)	 | ✅ Completed |
+| Docker compose orchestration	| ✅ Completed |
+| Kubernetes manifests | ✅ Completed |
+| GitHub Actions CI	|   ✅ Completed |
+| GHCR publish workflow + packages |  ✅ Completed |
 
 ---
 
