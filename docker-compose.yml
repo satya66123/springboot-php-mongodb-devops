@@ -1,0 +1,63 @@
+version: "3.9"
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: mongodb
+    restart: always
+    env_file:
+      - .env
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_DATABASE}
+    ports:
+      - "${MONGO_PORT}:27017"
+    volumes:
+      - mongo_data:/data/db
+      - ./infra/mongodb/init.js:/docker-entrypoint-initdb.d/init.js
+
+  mongo-express:
+    image: mongo-express:1.0.2
+    container_name: mongo-express
+    restart: always
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGO_ROOT_USER}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGO_ROOT_PASSWORD}
+      ME_CONFIG_BASICAUTH: "false"
+    ports:
+      - "8086:8081"
+
+  springboot-service:
+    build:
+      context: ./springboot-service
+    container_name: springboot-service
+    restart: always
+    depends_on:
+      - mongodb
+    env_file:
+      - .env
+    ports:
+      - "${SPRINGBOOT_PORT}:8080"
+
+  php-service:
+    build:
+      context: ./php-service
+    container_name: php-service
+    restart: always
+    depends_on:
+      - springboot-service
+    env_file:
+      - .env
+    environment:
+      API_BASE_URL: http://springboot-service:8080
+    ports:
+      - "${PHP_PORT}:80"
+
+volumes:
+  mongo_data:
